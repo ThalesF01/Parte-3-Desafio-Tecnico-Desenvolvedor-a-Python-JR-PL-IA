@@ -1,0 +1,32 @@
+question,answer
+O que é inteligência artificial?,Inteligência artificial é a simulação de processos humanos por máquinas.
+Para que serve o Python?,"Python é usado para desenvolvimento web, automação, ciência de dados e IA."
+Como instalar o Python?,Você pode instalar o Python baixando do site oficial python.org e seguindo o instalador.
+O que é machine learning?,Machine learning é uma técnica de IA que permite que sistemas aprendam com dados.
+Como funciona um modelo de classificação?,Um modelo de classificação atribui rótulos a dados com base em exemplos previamente aprendidos.
+Qual a diferença entre IA e ML?,"IA é o campo geral, enquanto ML é uma técnica específica dentro da IA."
+Como criar um ambiente virtual Python?,Use `python -m venv nome_do_ambiente` para criar um ambiente virtual.
+O que é TF-IDF?,"TF-IDF é uma técnica de ponderação de palavras em documentos para análise de texto."""
+O que é cosine similarity?,Cosine similarity mede a similaridade entre vetores usando o ângulo entre eles.
+Como rodar testes com pytest?,Instale pytest e execute `pytest` no terminal dentro do diretório do projeto.
+O que é FastAPI?,FastAPI é um framework web moderno e rápido para construir APIs em Python.
+Como criar um endpoint em FastAPI?,Use `@app.post('/rota')` ou `@app.get('/rota')` e defina a função correspondente.
+O que é rate limiting?,Rate limiting limita o número de requisições de um usuário em determinado período.
+Como ler um CSV em Python?,Use `pandas.read_csv('arquivo.csv')` para carregar o arquivo em um DataFrame.
+O que é um DataFrame?,Um DataFrame é uma estrutura de dados bidimensional do pandas para armazenar tabelas.
+Como salvar um modelo treinado?,Use `pickle` ou `joblib` para serializar o modelo em um arquivo.
+O que é pré-processamento de texto?,É a limpeza e normalização do texto antes de aplicar algoritmos de NLP.
+Como remover acentos de um texto?,Use `unicodedata.normalize` para normalizar os caracteres acentuados.
+O que é regex?,Regex é uma linguagem de padrões para busca e manipulação de strings.
+Como contar palavras em um texto?,Você pode usar `text.split()` e `len()` para contar as palavras.
+O que é embedding?,Embedding é uma representação vetorial de palavras ou documentos em NLP.
+Como medir a performance de um modelo?,"Use métricas como acurácia, precisão, recall e F1 Score."
+O que é overfitting?,Overfitting ocorre quando o modelo aprende demais os dados de treino e não generaliza.
+Como evitar overfitting?,"Use regularização, mais dados, ou técnicas de validação cruzada."
+O que é validação cruzada?,É uma técnica para avaliar modelos dividindo os dados em múltiplos folds.
+Como dividir dados em treino e teste?,Use `train_test_split` do scikit-learn para separar os dados.
+O que é um tokenizer?,Tokenizer é uma ferramenta que divide texto em palavras ou tokens.
+Como gerar vetores de texto?,"Use TF-IDF, CountVectorizer ou embeddings pré-treinados."
+O que é NLP?,"NLP é Processamento de Linguagem Natural, área da IA que lida com texto e fala."
+Como lidar com textos longos?,Divida o texto em partes ou resuma antes de processar.
+Como documentar um projeto Python?,"Use README.md, docstrings nas funções e comentários claros no código."
