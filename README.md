@@ -1,269 +1,269 @@
-# FAQ Bot - Sistema de Busca Semântica
+# Parte 3: FAQ Bot com TF-IDF + Vizinhos 🤖
 
-Sistema simples e eficaz de FAQ usando TF-IDF + K-Nearest Neighbors para busca semântica de respostas.
+Um sistema completo de busca em FAQ usando TF-IDF e algoritmo de vizinhos mais próximos, com interface interativa e métricas detalhadas.
 
-## 📋 Visão Geral
+## 📋 Funcionalidades
 
-Este projeto implementa um bot de FAQ que utiliza técnicas de processamento de linguagem natural para encontrar respostas relevantes baseadas na similaridade semântica entre perguntas. A solução é leve, rápida e não requer recursos computacionais intensivos.
+- **Treinamento automatizado** com `train.py`
+- **Bot interativo** via linha de comando
+- **Múltiplas respostas** ranqueadas por similaridade
+- **Métricas detalhadas** de performance do modelo
+- **Testes automatizados** com pytest
+- **Salvamento de artefatos** para reutilização
 
-## 🏗️ Estrutura do Projeto
+## 🚀 Instalação e Setup
+
+### **Pré-requisitos:**
+- Python 3.8+
+- pip
+
+### **1. Clone e configure o ambiente:**
+
+```bash
+# Clone o repositório
+git clone https://github.com/ThalesF01/Parte-3-Desafio-Tecnico-Desenvolvedor-a-Python-JR-PL-IA
+cd Parte-3-Desafio-Tecnico-Desenvolvedor-a-Python-JR-PL-IA
+
+# Crie ambiente virtual
+python -m venv venv
+
+# Ative o ambiente virtual
+# Linux/Mac:
+source venv/bin/activate
+# Windows:
+venv\Scripts\activate
+
+# Instale dependências
+pip install -r requirements.txt
+```
+
+### **2. Dependências necessárias:**
+
+```txt
+pandas>=1.3.0
+scikit-learn>=1.0.0
+pytest>=6.0.0
+pickle
+```
+
+Se não tiver `requirements.txt`, instale manualmente:
+```bash
+pip install pandas scikit-learn pytest
+```
+
+## 📂 Estrutura do Projeto
 
 ```
 projeto/
 ├── data/
 │   └── faq.csv              # Dataset com perguntas e respostas
-├── artifacts/               # Modelos treinados (gerado após execução)
-│   ├── vectorizer.pkl       # Modelo TF-IDF serializado
-│   ├── tfidf_model.pkl      # Modelo K-NN serializado
-│   └── metrics.pkl          # Métricas do modelo
+├── artifacts/               # Artefatos gerados pelo treinamento
+│   ├── vectorizer.pkl       # TF-IDF vectorizer treinado
+│   ├── tfidf_model.pkl     # Modelo de vizinhos mais próximos
+│   └── metrics.pkl         # Métricas de performance
 ├── tests/
-│   └── test_train.py        # Testes unitários
-├── train.py                 # Script de treinamento do modelo
-├── faq_bot.py              # Interface do bot com CLI
-├── requirements.txt        # Dependências Python
-└── README.md              # Este arquivo
+│   └── test_train.py       # Testes automatizados
+├── train.py                # Script de treinamento
+├── faq_bot.py             # Interface interativa do bot
+└── requirements.txt        # Dependências
 ```
 
-## ⚙️ Instalação e Configuração
+## 🔧 Como rodar train.py
 
-### Pré-requisitos
-- Python 3.7+
-- pip
+### **Executar treinamento:**
 
-### 1. Clonar o repositório
 ```bash
-git clone <url-do-repositorio>
-cd faq-bot
-```
-
-### 2. Instalar dependências
-```bash
-pip install -r requirements.txt
-```
-
-### 3. Preparar dados
-Certifique-se de que o arquivo `data/faq.csv` existe com o formato:
-
-```csv
-question,answer
-Como fazer login?,Use seu email e senha na tela de login
-Esqueci minha senha,Clique em "Esqueci senha" e siga as instruções
-Como criar uma conta?,Clique em "Criar conta" e preencha o formulário
-```
-
-## 🚀 Execução
-
-### 1. Treinar o modelo
-```bash
+# Treinar o modelo
 python train.py
 ```
 
-**Saída esperada:**
+**O que acontece:**
+1. Carrega dados de `data/faq.csv`
+2. Treina vectorizer TF-IDF nas perguntas
+3. Treina modelo de vizinhos mais próximos
+4. Calcula métricas de performance
+5. Salva artefatos em `artifacts/`
+
+### **Output esperado:**
 ```
 Treinamento concluído! Artefatos salvos em artifacts/
 Calculando métricas básicas...
-Similaridade média: 0.875
+Similaridade média: 0.847
 Similaridade min/max: 0.234 / 1.000
 Acertos exatos (cobertura): 45/50 (90.00%)
 Distribuição de similaridades:
-  Alta (≥0.8): 42
-  Média (0.5-0.8): 6
+  Alta (≥0.8): 38
+  Média (0.5-0.8): 10
   Baixa (<0.5): 2
-Tamanho do vocabulário: 324
+Tamanho do vocabulário: 156
 ```
 
-### 2. Executar o bot
+## 🤖 Como usar o FAQ Bot
+
+### **Executar bot interativo:**
+
 ```bash
+# Iniciar o bot (após treinar o modelo)
 python faq_bot.py
 ```
 
-**Interface interativa com comandos:**
-- Digite perguntas normalmente para buscar respostas
-- `stats` - Exibe estatísticas do modelo treinado
-- `multi <pergunta>` - Retorna múltiplas respostas rankeadas
-- `quit` / `sair` / `exit` - Encerra o programa
+### **Comandos disponíveis:**
 
-**Exemplo de uso:**
+#### **1. Pergunta simples:**
 ```
-FAQ Bot carregado!
+Pergunta: Para que serve o Python?
+Resposta: Python é usado para desenvolvimento web, automação, ciência de dados e IA.
+Confiança estimada: 0.92
+```
 
-Pergunta: Como fazer login?
-Resposta: Use seu email e senha na tela de login
-Confiança estimada: 0.95
-
-Pergunta: stats
-=== Estatísticas do Modelo ===
-total_questions: 50
-vocabulary_size: 324
-mean_similarity: 0.875
-
-Pergunta: multi problema senha
+#### **2. Múltiplas respostas:**
+```
+Pergunta: multi python
 Top 3 respostas:
-1. Clique em "Esqueci senha" e siga as instruções (similaridade: 0.78)
-2. Entre em contato com o suporte técnico (similaridade: 0.45)
-3. Verifique se caps lock está ativado (similaridade: 0.32)
+1. Python é usado para desenvolvimento web, automação, ciência de dados e IA. (similaridade: 0.89)
+2. Você pode instalar o Python baixando do site oficial python.org e seguindo o instalador. (similaridade: 0.76)
+3. Use README.md, docstrings nas funções e comentários claros no código. (similaridade: 0.45)
+```
+
+#### **3. Estatísticas do modelo:**
+```
+Pergunta: stats
+
+=== Estatísticas do Modelo ===
+mean_similarity: 0.847
+coverage_percent: 90.00
+total_questions: 50
+vocabulary_size: 156
+high_similarity_count: 38
+medium_similarity_count: 10
+low_similarity_count: 2
+```
+
+#### **4. Sair:**
+```
+Pergunta: sair
 ```
 
 ## 🧪 Executar Testes
 
+### **Todos os testes:**
 ```bash
-# Rodar todos os testes
-python -m pytest tests/test_train.py -v
-
-# Com relatório detalhado
-python -m pytest tests/test_train.py -v --tb=short
-
-# Teste específico
-python -m pytest tests/test_train.py::test_compute_metrics -v
+python -m pytest -q
 ```
 
-**Saída esperada:**
-```
-tests/test_train.py::test_load_data PASSED
-tests/test_train.py::test_train_tfidf_model PASSED
-tests/test_train.py::test_compute_metrics PASSED
-tests/test_train.py::test_metrics_values PASSED
-tests/test_train.py::test_small_dataset PASSED
-```
+## 📊 Formato do CSV
 
-## 🛠️ Decisões Técnicas
+O arquivo `data/faq.csv` deve ter a estrutura:
 
-### Algoritmo Escolhido: TF-IDF + K-Nearest Neighbors
-
-**Por que essa abordagem?**
-
-1. **Simplicidade e Eficácia**: Solução robusta para busca semântica em datasets pequenos/médios
-2. **Performance**: Treinamento rápido, consultas em tempo real
-3. **Interpretabilidade**: Resultados explicáveis através da similaridade coseno
-4. **Recursos**: Não requer GPU ou grandes quantidades de memória
-5. **Manutenibilidade**: Código simples de entender e modificar
-
-### Configurações do Modelo
-
-```python
-# TF-IDF Vectorizer
-TfidfVectorizer()  # Configuração padrão otimizada
-
-# K-Nearest Neighbors
-NearestNeighbors(n_neighbors=1, metric='cosine')
+```csv
+question,answer
+O que é inteligência artificial?,Inteligência artificial é a simulação de processos humanos por máquinas.
+Para que serve o Python?,Python é usado para desenvolvimento web, automação, ciência de dados e IA.
+Como instalar o Python?,Você pode instalar o Python baixando do site oficial python.org e seguindo o instalador.
 ```
 
-**Métrica de Distância**: Coseno - ideal para comparação de textos, não sensível ao tamanho dos documentos.
+**Requisitos:**
+- Colunas obrigatórias: `question` e `answer`
+- Encoding: UTF-8
+- Separador: vírgula (`,`)
 
-### Métricas de Avaliação
+## 🧠 Explicação Técnica
+
+### **Algoritmo de Busca:**
+
+1. **TF-IDF Vectorization:**
+   ```python
+   vectorizer = TfidfVectorizer()
+   X = vectorizer.fit_transform(questions)
+   ```
+   - Converte perguntas em vetores numéricos
+   - TF-IDF pondera importância das palavras
+
+2. **Vizinhos Mais Próximos:**
+   ```python
+   nn_model = NearestNeighbors(n_neighbors=1, metric='cosine')
+   nn_model.fit(X)
+   ```
+   - Usa distância cosseno para encontrar similaridade
+   - Retorna pergunta mais similar do dataset
+
+3. **Cálculo de Confiança:**
+   ```python
+   similarity = 1 - cosine_distance
+   ```
+   - Converte distância em similaridade (0-1)
+   - Valores altos = maior confiança
+
+### **Métricas Calculadas:**
 
 | Métrica | Descrição | Interpretação |
 |---------|-----------|---------------|
-| **Similaridade Média** | Média das similaridades entre perguntas e vizinhos mais próximos | Qualidade geral do matching |
-| **Coverage (Acertos Exatos)** | % de perguntas que encontram match perfeito consigo mesmas | Capacidade de distinção do modelo |
-| **Distribuição de Similaridades** | Contagem por faixas de similaridade | Identificação de possíveis problemas no dataset |
-| **Tamanho do Vocabulário** | Número de features únicas extraídas | Complexidade e capacidade do modelo |
+| `mean_similarity` | Similaridade média entre perguntas | Quão bem o modelo diferencia perguntas |
+| `coverage_percent` | % de self-matches | Quantas perguntas encontram a si mesmas |
+| `high_similarity_count` | Similaridade ≥ 0.8 | Respostas de alta confiança |
+| `vocabulary_size` | Palavras únicas | Complexidade do vocabulário |
 
-## 📊 API e Funcionalidades
+### **Interpretação dos Resultados:**
 
-### Função Principal
+- **Similaridade > 0.8**: Resposta confiável ✅
+- **Similaridade 0.5-0.8**: Resposta razoável ⚠️
+- **Similaridade < 0.5**: Resposta duvidosa ❌
+
+## 🔧 Funcionalidades do Bot
+
+### **1. Busca Simples:**
 ```python
-from faq_bot import ask_question
-
-answer, confidence = ask_question("Como criar uma conta?")
-print(f"Resposta: {answer}")
-print(f"Confiança: {confidence:.2f}")
+answer, confidence = ask_question("Como fazer login?")
+# Retorna: ("Use email e senha", 0.92)
 ```
 
-### Busca Múltipla
+### **2. Busca Múltipla:**
 ```python
-from faq_bot import ask_multiple
-
-results = ask_multiple("problema login", top_k=3)
-for result in results:
-    print(f"{result['rank']}. {result['answer']} ({result['similarity']:.2f})")
+results = ask_multiple("senha", top_k=3)
+# Retorna lista com top 3 respostas ranqueadas
 ```
 
-### Estatísticas do Modelo
+### **3. Estatísticas:**
 ```python
-from faq_bot import get_model_stats
-
 stats = get_model_stats()
-print(f"Total de perguntas: {stats['total_questions']}")
-print(f"Vocabulário: {stats['vocabulary_size']} palavras")
+# Retorna métricas do modelo treinado
 ```
 
-## 🔧 Resolução de Problemas
+### **4. Feedback Inteligente:**
+- Confiança < 0.5: Sugere reformular pergunta
+- Múltiplas opções quando útil
+- Interface amigável com comandos intuitivos
 
-### Erro: "Arquivo não encontrado"
-```bash
-# Verifique se os arquivos existem
-ls data/faq.csv
-ls artifacts/
+## 📈 Exemplos de Uso
 
-# Se artifacts/ estiver vazio, execute o treinamento
-python train.py
+### **Cenário 1: FAQ de Sistema**
+```csv
+question,answer
+Como fazer login?,Digite email e senha na tela inicial
+Esqueci minha senha,Use a opção "Esqueci senha" no login  
+Como alterar perfil?,Acesse Menu > Perfil > Editar
 ```
 
-### Baixa confiança nas respostas
-- **Causa**: Dataset pequeno ou perguntas muito específicas
-- **Solução**: Adicionar mais variações de perguntas similares ao CSV
-- **Verificação**: Use comando `stats` para analisar distribuição de similaridades
-
-### Erros nos testes
-```bash
-# Certifique-se de estar no diretório correto
-pwd
-
-# Execute da raiz do projeto
-python -m pytest tests/test_train.py -v
+**Teste:**
+```
+Pergunta: login
+Resposta: Digite email e senha na tela inicial
+Confiança: 0.89
 ```
 
-## 🚀 Melhorias Futuras
-
-### Curto Prazo
-- [ ] Suporte a stop words em português
-- [ ] Cache de consultas frequentes
-- [ ] Logs estruturados para debugging
-
-### Médio Prazo
-- [ ] Interface web com Flask/FastAPI
-- [ ] Métricas avançadas (BLEU, ROUGE)
-- [ ] Suporte a múltiplos idiomas
-
-### Longo Prazo
-- [ ] Migração para embeddings contextuais (BERT/Sentence-BERT)
-- [ ] Sistema de feedback para melhoria contínua
-- [ ] Pipeline de retreinamento automático
-
-## 📦 Dependências
-
-```txt
-pandas>=1.5.0        # Manipulação de dados
-scikit-learn>=1.1.0  # Algoritmos de ML
-pytest>=7.0.0        # Framework de testes
+### **Cenário 2: Suporte Técnico**  
+```csv
+question,answer
+Sistema lento,Verifique sua conexão de internet
+Erro 404,Página não encontrada. Verifique a URL
+Erro 500,Erro interno. Tente novamente em alguns minutos
 ```
 
-## 📈 Benchmarks
-
-### Dataset de Exemplo (50 perguntas)
-- **Tempo de treinamento**: ~0.5 segundos
-- **Tempo de consulta**: ~10ms por pergunta
-- **Uso de memória**: ~5MB para modelos serializados
-- **Acurácia típica**: 85-95% de similaridade média
-
-### Escalabilidade
-- **Até 1.000 perguntas**: Performance excelente
-- **1.000-10.000 perguntas**: Performance boa, considerar otimizações
-- **10.000+ perguntas**: Avaliar migração para soluções mais robustas
-
-## 👥 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
----
-
-**Desenvolvido como solução técnica para sistema de FAQ com busca semântica** ⚡
+**Teste:**
+```
+Pergunta: multi erro
+Top 3 respostas:
+1. Erro interno. Tente novamente em alguns minutos (0.87)
+2. Página não encontrada. Verifique a URL (0.82)  
+3. Verifique sua conexão de internet (0.34)
+```
